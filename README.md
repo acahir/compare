@@ -5,7 +5,7 @@ This theme component is designed to easily create a comparison web page, similar
 across the web. It is **not** a full hugo theme, but is designed to be used as a secondary theme to generate 
 comparison pages either via a section or type.
 
-Check out the [Language Cross Reference]() for a live example build using this theme.
+Check out the [Language Cross Reference](https://acahir.github.io/languageCrossReference/) for a live example build using this theme.
 
 ### Features
 Includes collapsable sections, anchor link menu, sticky header, adjustable number of comparisons (columns), and 
@@ -58,7 +58,7 @@ This section is mainly included for documenting the structure and design decisio
 (hopefully) isn't needed to use the theme for most cases, but is available to provide an overview for anyone 
 modifying or simply trying to learn how it works.
 
-##### HTML, CSS, and Javascript
+#### HTML, CSS, and Javascript
 The HTML is designed using semantic elements as much as possible, and the CSS is built off of [barebones](https://github.com/acahir/Barebones), a lightwieght boilerplate. There is a minimal about of vanilla 
 Javascript used for the interactive functionality (show/hide, section link menu, etc) but no external 
 Javascript libraries are used.
@@ -83,7 +83,7 @@ variables are the "source of truth", but are updated via Javascript when the pag
 
 No SASS/SCSS is used.
 
-##### Data
+#### Data
 The data for the comparisons use Hugo Data Tempaltes, which support data from JSON, YAML, TOML and are assumed 
 to be in the `data/{{comparisonType}}/` directory as configured in front matter.
 
@@ -106,6 +106,6 @@ json doesn't.
 **Note** in YAML, the only way to control the order of items seems to be to use the "list" structure with 
 dashes/hyphens. Ranging over a list of key/value pairs output items in a different order than in the data file.
 
-##### Files
+#### Files
 
 There aren't many, see the responsitory.
