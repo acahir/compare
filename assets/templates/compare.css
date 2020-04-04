@@ -1,0 +1,29 @@
+:root {
+{{- $compareItems := (index .Site.Data .Params.comparisonType) -}}
+{{- range $comparisonItemName, $comparisonItem := $compareItems -}}
+  {{- if not (in $comparisonItemName "template") }}
+  --{{- $comparisonItemName -}}-column:0;
+  --{{- $comparisonItemName -}}-visibility:none;
+    {{- with $comparisonItem.options.themeColor }}
+  --{{- $comparisonItemName -}}-color:{{- . -}};
+    {{ end -}}
+  {{- end -}}
+{{- end }}
+}
+
+{{ range $comparisonItemName, $comparisonItem := $compareItems -}}
+  {{- if not (in $comparisonItemName "template") }}
+.{{- $comparisonItemName }}-bg-color { background-color: var(--{{- $comparisonItemName -}}-color); }
+.{{- $comparisonItemName }} {
+  display: var(--{{- $comparisonItemName }}-visibility);
+  grid-column: var(--{{- $comparisonItemName }}-column);
+}
+  {{ end -}}
+{{- end -}}
+
+{{ $maxColumns := .Params.maxComparisons -}}
+{{- range $columnNumber := (seq $maxColumns) }}
+#column{{ $columnNumber }}-select-div {
+  grid-column: {{ add $columnNumber 1 }};
+}  
+{{- end -}}

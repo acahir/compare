@@ -1,0 +1,23 @@
+{{ define "main" }}
+	{{- $compareItems := (index .Site.Data .Params.comparisonType) -}}
+	{{- $maxColumns := .Params.maxComparisons -}}
+  {{- partial "comparison-header.html" (dict "maxColumns" $maxColumns "compareItems" $compareItems) -}}
+	
+	{{/* use sections defined in front matter for outer loop */}}
+	{{- range $sectionsParamsMap := .Params.comparisonSections -}}
+		{{- range $sectionShortName, $sectionTitle := $sectionsParamsMap }}
+		<section>
+{{/* first output title using partial and two vars */}}
+{{- partial "comparison-section-header.html" (dict "title" $sectionTitle "sectionShortName" $sectionShortName) -}}
+
+			{{/* then output section grid, getting the current section for each item */}}
+			<div id="{{ $sectionShortName }}" class="code-section-grid">
+		{{- /* partial for each (grid) item to be compared */ -}}
+		{{- partial "comparison-item.html" (dict "compareItems" $compareItems "sectionShortName" $sectionShortName) -}}
+		
+		{{- end -}} {{/*  sectionsParamsMap */}}
+			</div><!-- code-section-grid -->
+		</section>
+	{{- end -}} {{/* comparisonSections - sections defined in front matter */}}
+{{- end -}} {{/* main */}}
+

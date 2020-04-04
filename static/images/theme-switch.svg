@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400px" height="400px" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>theme-switch</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="theme-switch">
+            <g id="Light" transform="translate(10.000000, 10.000000)">
+                <circle id="Oval" fill="#FFFFFF" cx="100" cy="100" r="100"></circle>
+                <path d="M91.6485671,39 L109.497738,39 L149,143 L128.224736,143 L118.568627,117.073239 L82.2850679,117.073239 L72.775264,143 L52,143 L91.6485671,39 Z M114.911011,102.864789 L100.573152,61.9971831 L85.6500754,102.864789 L114.911011,102.864789 Z" id="A-Copy" fill="#010101"></path>
+            </g>
+            <g id="Cutout" transform="translate(105.000000, 105.000000)" fill="#FFFFFF">
+                <path d="M0.420790208,104.897017 C14.4271489,54.2908696 54.2908696,14.4271489 104.897017,0.420790208 C104.965427,1.93862834 105,3.4652767 105,5 C105,60.228475 60.228475,105 5,105 C3.4652767,105 1.93862834,104.965427 0.420791255,104.897018 Z" id="Combined-Shape"></path>
+            </g>
+            <g id="Dark" transform="translate(110.000000, 110.000000)">
+                <circle id="Oval-Copy" fill="#000000" cx="140" cy="140" r="140"></circle>
+                <path d="M127.677225,49 L154.542986,49 L214,205 L182.730015,205 L168.196078,166.109859 L113.58371,166.109859 L99.2699849,205 L68,205 L127.677225,49 Z M162.690799,144.797183 L141.110106,83.4957746 L118.648567,144.797183 L162.690799,144.797183 Z" id="A" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

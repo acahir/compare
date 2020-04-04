@@ -1,0 +1,46 @@
+{{/* 
+	Partial to output each detail cell of comparison 
+	Override this partial to customize for your type of comparison
+	
+	Params:
+		.compareItems - list of source files in the data/{{comparisonType}}/* folder
+		.sectionShortName - section 'key' that is defined front matter (and should match in the data)
+*/}}
+			{{- range $comparisonItemName, $comparisonItem := $.compareItems -}}
+				{{- /* filter out any items with "tempate" in the $comparisonItemName */ -}}
+				{{- if not (in $comparisonItemName "template") -}}
+					{{- if isset (index $comparisonItem "sections") $.sectionShortName -}}
+						{{- $sectionMap := (index (index $comparisonItem "sections") $.sectionShortName) -}}
+						{{- if isset $sectionMap "items" -}}
+							{{- $sectionItemsList :=  (index $sectionMap "items") -}}
+							{{- range $index, $itemMap := $sectionItemsList -}}
+								{{- range $headerTitle, $codeExample := $itemMap }}
+				<div class="lang {{ $comparisonItemName }} {{ $comparisonItemName }}-bg-color{{ if (eq $index 0) }} first{{ else if (eq $index (sub (len $sectionItemsList) 1)) }} last{{ end }}">
+									{{- if (eq $headerTitle "reference") }}
+					<div class="code-reference">
+										{{- /* use regex to handle multiple references */ -}}
+										{{- $refurls := (findRE "https?://[-a-zA-Z0-9()@:%_+.~#?&/=]*[\b$]?" $codeExample) -}}		
+										{{- range $refurls }}
+						<a href="{{ . }}" target="_blank" rel="noopener noreferrer">reference</a>
+										{{- end }}
+					</div>
+									{{- else }}
+					<div class="code-wrapper showHeader">
+						<div class="code-header flex"><span>{{ $headerTitle }}</span></div>										
+										{{- $urls := (findRE "https?://[-a-zA-Z0-9()@:%_+.~#?&/=]*[\b$]?" $codeExample) -}}		
+										{{- range $urls -}}
+											{{- $codeExample = replace $codeExample . "" -}}
+										{{- end -}}	
+					{{  strings.TrimSuffix "</div>" ( strings.TrimPrefix "<div class=\"highlight\">" ( highlight (trim $codeExample "\n") $comparisonItemName "" )) | safeHTML }}
+										{{- range $urls }}
+						<a class= "{{ $comparisonItemName }}-bg-color" href="{{ . }}" target="_blank" rel="noopener noreferrer">more info</a>
+										{{- end }}	
+					</div> <!-- code-wrapper -->
+									{{- end -}} {{/* if reference */}}
+				</div> <!-- lang -->
+								{{- end -}} {{/* itemMap - not really a loop, only one item */}}
+							{{- end -}} {{/* sectionItemsList - all items in a section */}}
+						{{- end -}} {{/* if check for items */}}
+					{{- end -}} {{/* if check for section name */}}
+  			{{- end -}} {{/* skip any data files with "template" */}}
+  		{{- end -}} {{/* compareItems - all comparisonType in data/{{comparisonType}} folder */}}

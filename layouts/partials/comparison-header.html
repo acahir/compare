@@ -1,0 +1,22 @@
+{{/* 
+	Partial to output select menu for each column
+	Override this partial to customize for your type of comparison
+	
+	Params:
+		.maxColumns - .Params.maxComparisons from front matter
+		.compareItems - list of source files in the data/{{comparisonType}}/* folder
+*/}}
+		<menu class="code-section-grid">
+			{{ range $columnNumber := (seq 1 .maxColumns) -}}
+			<div id="column{{ $columnNumber }}-select-div" class="column-menu">
+				<select id="column{{ $columnNumber }}-select" class="column-select" name="{{ $columnNumber }}">
+					<option value="">Choose language:</option>			  
+{{- range $comparisonItemName, $comparisonItem := $.compareItems -}}
+	{{- if not (in $comparisonItemName "template") }}
+					<option value="{{- $comparisonItemName -}}">{{- title $comparisonItemName -}}{{- with $comparisonItem.info.version }} (v{{- . -}}){{ end -}}</option>
+	{{- end -}}
+{{- end }}
+				</select>
+			</div>
+			{{- end }}
+		</menu>

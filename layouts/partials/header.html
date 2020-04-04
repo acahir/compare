@@ -1,0 +1,32 @@
+	<header>
+		<h4>{{ .Title }}</h4>
+		<nav>
+			<menu id="section-menu">
+				<span id="section-menu-toggle">Sections</span>
+				<ul>
+				{{- /* use sections defined in front matter creating menu */ -}}
+				{{- range $sectionsParamsMap := .Params.comparisonSections -}}
+					{{- range $sectionShortName, $sectionTitle := $sectionsParamsMap }}
+					<li><a class="section-link" href="#{{- $sectionShortName -}}-section">{{- $sectionTitle -}}</a></li>
+					{{- end -}}
+				{{- end -}}
+				</ul>
+			</menu>
+			<menu id="number-of-comparisons-menu">
+				<div>
+					<span>Columns:</span>
+				{{- $maxColumns := .Params.maxComparisons -}}
+				{{- range $columnNumber := (seq $maxColumns) }}
+					<input type="radio" id="num-columns-{{- $columnNumber -}}" class="number-of-comparison-radio" name="columns" value="{{ $columnNumber}}">
+					<label for="num-columns-{{- $columnNumber -}}">{{- $columnNumber -}}</label>
+				{{- end }}
+				</div>
+			</menu>
+			<div id="about-nav">
+				<a href="https://github.com/acahir/languagequickreference/" target="_blank" rel="noopener noreferrer">About</a>
+			</div>
+			<menu id="code-theme-menu">
+				<span id="code-theme-menu-toggle"><img title="Toggle code theme" src="/images/theme-switch.svg" alt="Toggle code theme"></span>
+			</menu>
+		</nav>
+	</header>
