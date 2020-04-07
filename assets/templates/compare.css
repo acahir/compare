@@ -1,5 +1,7 @@
 :root {
-{{- $compareItems := (index .Site.Data .Params.comparisonType) -}}
+{{- $maxColumns := ( add .Params.maxComparisons 1) }}
+  --max-columns:{{ $maxColumns }};
+{{ $compareItems := (index .Site.Data .Params.comparisonType) -}}
 {{- range $comparisonItemName, $comparisonItem := $compareItems -}}
   {{- if not (in $comparisonItemName "template") }}
   --{{- $comparisonItemName -}}-column:0;
@@ -21,9 +23,9 @@
   {{ end -}}
 {{- end -}}
 
-{{ $maxColumns := .Params.maxComparisons -}}
-{{- range $columnNumber := (seq $maxColumns) }}
+{{ $maxColumns := ( add .Params.maxComparisons 1) -}}
+{{- range $columnNumber := (seq 2 $maxColumns) }}
 #column{{ $columnNumber }}-select-div {
-  grid-column: {{ add $columnNumber 1 }};
+  grid-column: {{ $columnNumber }};
 }  
 {{- end -}}

@@ -1,12 +1,13 @@
 <head>
-  {{- $normalizeCSS := resources.Get "css/normalize.css" | minify | fingerprint -}}
+  <meta charset="utf-8">
+  {{ $normalizeCSS := resources.Get "css/normalize.css" | minify -}}
 	<link rel="stylesheet" type="text/css" href="{{ $normalizeCSS.RelPermalink }}">
-	{{- $barebonesCSS := resources.Get "css/barebones.css" | minify | fingerprint -}}
+	{{ $barebonesCSS := resources.Get "css/barebones.css" | minify -}}
 	<link rel="stylesheet" type="text/css" href="{{ $barebonesCSS.RelPermalink }}">
-	{{- $syntaxCSS := resources.Get "css/syntax-highlight.css" | minify | fingerprint -}}
+	{{ $syntaxCSS := resources.Get "css/syntax-highlight.css" | minify -}}
 	<link rel="stylesheet" type="text/css" href="{{ $syntaxCSS.RelPermalink }}">
-  {{- $compareCSS := resources.Get "templates/compare.css" | resources.ExecuteAsTemplate "css/compare.css" . | minify | fingerprint -}}
+  {{ $compareCSS := resources.Get "templates/compare.css" | resources.ExecuteAsTemplate "css/compare.css" . | minify -}}
   <link rel="stylesheet" type="text/css" href="{{ $compareCSS.RelPermalink }}">
-	{{- $layoutCSS := resources.Get "css/layout.css" | minify | fingerprint -}}
+	{{ $layoutCSS := resources.Get "css/layout.css" | minify -}}
 	<link rel="stylesheet" type="text/css" href="{{ $layoutCSS.RelPermalink }}">
 </head>

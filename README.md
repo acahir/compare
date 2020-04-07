@@ -41,7 +41,7 @@ specifically for that (styles, partials, etc). The good news is they are much mo
 to strip them down into a generic base setup.
 
 Todos
-- [ ] Define a "type" for use as a section in a page's front matter
+- [ ] Define a "type" for use as a section or in a page's front matter
   - [ ] Create an archetype template
 - [ ] Example Site
   - [ ] Create a generic comparison-item partial

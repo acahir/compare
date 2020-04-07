@@ -15,10 +15,10 @@
 			<menu id="number-of-comparisons-menu">
 				<div>
 					<span>Columns:</span>
-				{{- $maxColumns := .Params.maxComparisons -}}
-				{{- range $columnNumber := (seq $maxColumns) }}
-					<input type="radio" id="num-columns-{{- $columnNumber -}}" class="number-of-comparison-radio" name="columns" value="{{ $columnNumber}}">
-					<label for="num-columns-{{- $columnNumber -}}">{{- $columnNumber -}}</label>
+				{{- /* dealing with number of Comparisons here, so one less than number of columns */ -}}
+				{{- range $numComparisons := (seq .Params.maxComparisons) }}
+					<input type="radio" id="num-comparisons-{{- $numComparisons -}}" class="number-of-comparison-radio" name="comparisons" value="{{ $numComparisons}}">
+					<label for="num-comparisons-{{- $numComparisons -}}">{{- $numComparisons -}}</label>
 				{{- end }}
 				</div>
 			</menu>
@@ -26,7 +26,7 @@
 				<a href="https://github.com/acahir/languagequickreference/" target="_blank" rel="noopener noreferrer">About</a>
 			</div>
 			<menu id="code-theme-menu">
-				<span id="code-theme-menu-toggle"><img title="Toggle code theme" src="/images/theme-switch.svg" alt="Toggle code theme"></span>
+				<span id="code-theme-menu-toggle"><img title="Toggle code theme" src="{{ "/images/theme-switch.svg" | relURL }}" alt="Toggle code theme"></span>
 			</menu>
 		</nav>
 	</header>

@@ -4,80 +4,98 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     // set max number of columns once globally
-    maxColumns = setMaxColumns();
+    maxColumns = getComputedStyle(document.documentElement).getPropertyValue('--max-columns');
     
-    // load code theme preference
-    loadTheme();
+    // load code theme & and last settings preference
+    loadSettings();
 
-    // set column radio buttons based on current media query
-    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    var numColumns = 1;
-    if (vw > 1520) { numColumns = 3; }
-    else if (vw > 1020) { numColumns = 2; }
-  
-    var elementID = 'num-columns-' + numColumns
-    var numColumnsButton = document.getElementById(elementID);
-    numColumnsButton.checked = true;
-    changeNumColumns(numColumnsButton);
+    // set column radio buttons based on localStorage if present, else current media query
+    var numComparisons = localStorage.getItem("--num-comparisons");
+    
+    if (!numComparisons) {
+      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      numComparisons = 1;
+      if (vw > 1520) { numComparisons = 3; }
+      else if (vw > 1020) { numComparisons = 2; }   
+    }
+      
+    var elementID = 'num-comparisons-' + numComparisons
+    var numComparisonsButton = document.getElementById(elementID);
+    numComparisonsButton.checked = true;
+    changeNumColumns(numComparisonsButton);
     
   }, false);
 
-  function setMaxColumns() {
-    var radioButtons = document.getElementsByClassName('number-of-comparison-radio');
-    var max = 0;
-    for (let e of radioButtons) {
-      max = max > e.value ? max : e.value;
-    }
-    return max;
+  // init functions
+
+  // load theme from local storage to save "pref"
+  function loadSettings() {
+  	// load code theme
+		var codeTheme =	localStorage.getItem("code-theme")		
+		if (codeTheme) { document.documentElement.setAttribute("data-code-theme", codeTheme);}
+		
+		// get current number of visible columns
+		var numColumns = getComputedStyle(document.documentElement).getPropertyValue('--num-comparisons') + 1;
+		
+		// load column settings
+		for (let i = 1; i <= numColumns; i++) {
+		  var itemStr = '--column' + i.toString() + '-item';
+		  var colItem = localStorage.getItem(itemStr);
+		  if (colItem) {
+		    var menuElementID = 'column' + i + '-select';
+		    var menuElement = document.getElementById(menuElementID);
+		    if (menuElement) {
+		      menuElement.value = colItem;
+		      selectChange(menuElement);
+		    }
+		  }
+		}
   }
+
 
   function selectChange(element) {
     let root = document.documentElement;
   
-    var newSelectedLanguage = element.value;
-    var selectedColumn = (parseInt(element.name) + 1).toString();
+    var newSelectedItem = element.value;  // ex: swift
+    var selectedColumn = element.name;  // ex: 2
   
-    // TODO - change storage of what language is currently displayed in a column
-    //        to html data attribute, insted of unused css variable. 
-  
-    // Note - to get CSS variable values after page first loads:
-    //  (after setting in JS, they can be accessed from:
-    //   document.documentElement.style.getPropertyValue(), but this returns "" before0
-    //   being set the first time in JS. So getComputedStyle is consistent)
-    //  getComputedStyle(document.documentElement).getPropertyValue('--my-variable-name');
-  
-    // create css variable names
-    var langVisibilityVariableName = '--' + element.value + '-visibility';
-    var langColumnPropertyName = '--' + element.value + '-column';
-    var columnLanguagePropertyName = '--column' + element.name;
-  
-    // cleanup from previous settings
-    var menus = document.getElementsByTagName('select');
-    for (menu of menus) {
-      // clear any prev lang in current column
-      if (menu == element) {
-        var prevLanguage = root.style.getPropertyValue(columnLanguagePropertyName).trim();
+    // generate variable names (using css style for everywhere)
+    var itemVisibilityVarStr = '--' + newSelectedItem + '-visibility'; // ex: --swift-visibility
+    var itemColumnVarStr = '--' + newSelectedItem + '-column'; // ex: --swift-column
 
-        if (prevLanguage != '') {
-          var prevLanguageVisibilityVariableName = '--' + prevLanguage + '-visibility';
-          root.style.setProperty(prevLanguageVisibilityVariableName, 'none');
+    // not DRY, but need to look up what's in specific column ex column1: swift
+    // not used in CSS
+    var columnItemVarStr = '--column' + selectedColumn + '-item'; // ex: --column2-item
+
+    // cleanup from previous settings
+    var menus = document.getElementsByClassName('column-select');
+    for (menu of menus) {
+      // menu is same as event.target: clean up previous settings
+      if (menu == element) {
+        var prevItem = getComputedStyle(document.documentElement).getPropertyValue(columnItemVarStr).trim();
+        if (prevItem != '') {
+          var prevItemVisibilityVarStr = '--' + prevItem + '-visibility';
+          root.style.setProperty(prevItemVisibilityVarStr, 'none');
         }
         continue;
       }
     
-      // clean up previous location, if currently displayed
-      if (element.valeu != '' && menu.value === element.value) {
-        var prevColumnLanguagePropertyName = '--column' + menu.name;
-        root.style.setProperty(prevColumnLanguagePropertyName, '');
-      
+      // clean up previous location settings, if item was displayed
+      if (element.value != '' && menu.value === newSelectedItem) {
+        var prevColumnItemVarStr = '--column' + menu.name + '-item';
+        root.style.setProperty(prevColumnItemVarStr, '');
         menu.value = '';
+        localStorage.setItem(prevColumnItemVarStr, '');
       }
     }
   
     // set variables for new selection 
-    root.style.setProperty(langVisibilityVariableName, 'block');
-    root.style.setProperty(langColumnPropertyName, selectedColumn);
-    root.style.setProperty(columnLanguagePropertyName, element.value);
+    root.style.setProperty(itemVisibilityVarStr, 'block');
+    root.style.setProperty(itemColumnVarStr, selectedColumn);
+    root.style.setProperty(columnItemVarStr, newSelectedItem);
+    
+    // save to localStorage as well
+    localStorage.setItem(columnItemVarStr, newSelectedItem);
   }	
 
 
@@ -200,7 +218,10 @@
   
   // Number of Column radio button functions
   function changeNumColumns(target) {
-    const newNumColumns = target.value;
+    // UI is selecting number of comparisons, so to get to number of columns add 1
+    const newNumComparisons = target.value;
+    const newNumColumns = (parseInt(target.value) + 1).toString();
+    
     // clear up columns before decrease
     var menuId;
     var menuElement;
@@ -221,13 +242,15 @@
      
     // for increase & decrease, set new numColumns value
     // and display the select menus
-    document.documentElement.style.setProperty('--numColumns', newNumColumns);
-    for (let i = 1; i <= newNumColumns; i++) {
+    document.documentElement.style.setProperty('--num-comparisons', newNumComparisons);
+    for (let i = 2; i <= newNumColumns; i++) {
       menuId = 'column' + i.toString() + '-select';
       menuElement = document.getElementById(menuId);
       menuElementParent = document.getElementById(menuId + '-div');
       menuElementParent.style.display = 'inline-block';     
     }
+    
+    localStorage.setItem("--num-comparisons", newNumComparisons);
   }
   
   // event listener for radio buttons
@@ -244,12 +267,7 @@
       selectChange(event.target);
     }); 
   }
-  document.getElementById('column2-select').onchange = function() {
-    selectChange(this);
-  }
-  document.getElementById('column3-select').onchange = function() {
-    selectChange(this);
-  }
+
 
   // Code Theme
   // add listener
@@ -276,17 +294,6 @@
     window.setTimeout(function() {
       document.documentElement.classList.remove('transition-theme')
     }, 1000)
-  }
-
-  // load theme from local storage to save "pref"
-  function loadTheme() {
-  	//var theme = localStorage.getItem("theme")
-		var codeTheme =	localStorage.getItem("code-theme")
-		
-		//document.documentElement.setAttribute("data-theme", theme)
-		if (codeTheme) {
-  		document.documentElement.setAttribute("data-code-theme", codeTheme);
-    }
   }
 
 })();

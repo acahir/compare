@@ -3,11 +3,11 @@
 	Override this partial to customize for your type of comparison
 	
 	Params:
-		.maxColumns - .Params.maxComparisons from front matter
+		.maxColumns - .Params.maxComparisons + 1 from front matter
 		.compareItems - list of source files in the data/{{comparisonType}}/* folder
 */}}
 		<menu class="code-section-grid">
-			{{ range $columnNumber := (seq 1 .maxColumns) -}}
+			{{ range $columnNumber := (seq 2 .maxColumns) -}}
 			<div id="column{{ $columnNumber }}-select-div" class="column-menu">
 				<select id="column{{ $columnNumber }}-select" class="column-select" name="{{ $columnNumber }}">
 					<option value="">Choose language:</option>			  

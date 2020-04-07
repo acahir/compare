@@ -31,7 +31,7 @@
 										{{- range $urls -}}
 											{{- $codeExample = replace $codeExample . "" -}}
 										{{- end -}}	
-					{{  strings.TrimSuffix "</div>" ( strings.TrimPrefix "<div class=\"highlight\">" ( highlight (trim $codeExample "\n") $comparisonItemName "" )) | safeHTML }}
+					{{  strings.TrimSuffix "</div>" ( strings.TrimPrefix "<div class=\"highlight\">" ( highlight (trim $codeExample "\n") $comparisonItemName "" )) | safeHTML}}
 										{{- range $urls }}
 						<a class= "{{ $comparisonItemName }}-bg-color" href="{{ . }}" target="_blank" rel="noopener noreferrer">more info</a>
 										{{- end }}	

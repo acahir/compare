@@ -18,7 +18,8 @@ html[data-code-theme="light"] {
 	
 	--syntax-err: #ff0000;
 	
-	--code-color: #ddd;
+	--code-color: #333;
+	--code-header-color: #ddd;
 	--code-header-background: #666; /* hsl(0, 0%, 20%) */
 	--code-background: hsl(var(--theme-hue), 0%, 95%);
 }
@@ -44,6 +45,7 @@ html[data-code-theme="dark"] {
 	--syntax-error: #ff0000;
 	
 	--code-color: #ddd;
+	--code-header-color: #ddd;
 	--code-background: #333;		
 	--code-header-background: #444; 
 }
@@ -92,7 +94,13 @@ html {
 
 
 /* Chroma Classes */
-/* Background .chroma { background-color: #f0f0f0 } */
+
+/* Following was being generated but no style rule output. 
+   Different specificity made Safari transition it at different timing so added */
+/* .bp? */ .chroma .bp { color: var(--code-color); background-color: var(--code-background) }
+
+
+/* Background */ .chroma { color: var(--code-color); background-color: var(--code-background-color) }
 /* Error */ .chroma .err {  }
 /* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
 /* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }

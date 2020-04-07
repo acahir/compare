@@ -1,6 +1,6 @@
 {{ define "main" }}
 	{{- $compareItems := (index .Site.Data .Params.comparisonType) -}}
-	{{- $maxColumns := .Params.maxComparisons -}}
+	{{- $maxColumns := ( add .Params.maxComparisons 1) -}}
   {{- partial "comparison-header.html" (dict "maxColumns" $maxColumns "compareItems" $compareItems) -}}
 	
 	{{/* use sections defined in front matter for outer loop */}}
