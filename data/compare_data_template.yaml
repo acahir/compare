@@ -1,0 +1,24 @@
+info:
+  version: ""
+  lastModified: ""
+  shortName: ""
+  displayName: ""
+options:
+  themeColor: ""
+sections:
+  list (ordered):
+    items:
+      - 
+      - 
+      - 
+  key-values:
+    items:
+      key1: 
+      key2: 
+      rawString: |-
+           
+  list-of-key-values:
+    items:
+      - first:
+      - second:
+      - third:

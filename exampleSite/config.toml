@@ -1,0 +1,6 @@
+baseURL = "http://compare.test"
+title = "Compare Theme Example Site"
+theme = "compare"
+themesdir = "../.."
+languageCode = "en-us"
+disableKinds = ["RSS", "sitemap", "taxonomy", "taxonomyTerm"]
