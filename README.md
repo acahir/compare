@@ -21,7 +21,18 @@ comparison, requiring the user to simply configure the front matter.
 
 ### Use
 
-Coming Soon
+#### New Site
+
+TODO - document more than steps
+
+1. `hugo new site mySite`
+2. cd mySite
+3. git init
+4. git submodule add https://github.com/acahir/compare.git themes/compare
+
+
+#### Add to existing site as a secondary theme
+
 
 
 #### Options
@@ -44,14 +55,28 @@ Todos
 - [ ] Define a "type" for use as a section or in a page's front matter
   - [ ] Create an archetype template
 - [ ] Example Site
-  - [ ] Create a generic comparison-item partial
   - [ ] Create a basic product or plan comparison data set
   - [ ] Create a basic stylesheet for a table-like comparison design
 - [ ] Test in a new blank site and an exisiting themed site
 - [ ] Complete documentation for use and configuration
 - [ ] Figure out best practices for how theme components should be configured for "dropping in"
-
-
+- [ ] Stand-alone Theme
+  - [ ] Create data template
+  - [ ] Define Options (defaults)
+    - compare-showMenus (false) - allows user to choose items to compare
+    - compare-maxComparisons (required)- max number of items to compare
+    - compare-sections (optional)- list of section "Display Names"
+    - compare-type (required)- the type to compare if not using shortcode
+    - compare-showSectionHeaders (true) - displays collapsable section headers
+  - [ ] Create basic comparison-item partial
+  - [ ] Create shortcode to call
+    - [ ] Add to instructions about adding css with HasShortcode
+  - [ ] Update CSS
+    - [ ] Simplify down to one file, adding any barebones inherited styles
+    - [ ] Prepend all CSS rules with either "compare-" or outer container
+  
+  
+  
 ### Technical Details
 
 This section is mainly included for documenting the structure and design decisions for future reference. It 
